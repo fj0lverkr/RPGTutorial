@@ -30,6 +30,7 @@ namespace RPGTutorial.Objects
 		public AnimatedSprite2D animatedSprite2D;
 		public List<Node2D> EnemiesInMeleeRange = new();
 		public bool IsOnAttackCoolDown = false;
+		public GpuParticles2D HitEffect;
 
 		public string CharacterName;
 		public float StartingHitPoints = 0.0f;
@@ -41,6 +42,7 @@ namespace RPGTutorial.Objects
 			animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 			if (IsInGroup("Enemies"))
 			{
+				HitEffect = GetNode<GpuParticles2D>("HitEffectParticles2D");
 				StartingHitPoints = HitPoints;
 				animatedSprite2D.Play("idle");
 			}
@@ -48,7 +50,7 @@ namespace RPGTutorial.Objects
 
 		public virtual void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
-			modifier = modifier < 0.5 || modifier == 0 ? 0.5f : modifier; // prevent over-damage and division by zero
+			modifier = modifier < 0.1 || modifier == 0 ? 0.1f : modifier; // prevent over-damage and division by zero
 			modifier = modifier > 5 ? 5 : modifier; //prevent under-damage
 			HitPoints -= damage / modifier;
 			GD.Print($"{Name} is hit for {damage}/{modifier} = {damage / modifier} damage, new HP: {HitPoints}/{StartingHitPoints}.");

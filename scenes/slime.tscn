@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://4050c0neh52o"]
+[gd_scene load_steps=33 format=3 uid="uid://4050c0neh52o"]
 
 [ext_resource type="Script" path="res://code/Slime.cs" id="1_ca6ss"]
 [ext_resource type="Texture2D" uid="uid://bh77mo8bynir3" path="res://art/characters/slime.png" id="1_o0oc2"]
@@ -215,6 +215,17 @@ radius = 62.0081
 [sub_resource type="CircleShape2D" id="CircleShape2D_sr45l"]
 radius = 11.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y0agt"]
+emission_shape = 1
+emission_sphere_radius = 15.0
+particle_flag_align_y = true
+direction = Vector3(1, 1, 1)
+spread = 180.0
+gravity = Vector3(0, 25, 75)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+color = Color(0.690196, 0.831373, 0.933333, 1)
+
 [node name="slime" type="CharacterBody2D" groups=["Enemies"]]
 y_sort_enabled = true
 script = ExtResource("1_ca6ss")
@@ -229,10 +240,12 @@ offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_kq5y2")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 2
 metadata/_edit_lock_ = true
@@ -242,6 +255,7 @@ shape = SubResource("CircleShape2D_bk5t8")
 metadata/_edit_lock_ = true
 
 [node name="SlimeAttackArea" type="Area2D" parent="."]
+visible = false
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlimeAttackArea"]
@@ -251,6 +265,16 @@ metadata/_edit_lock_ = true
 
 [node name="KnockedBackCooldown" type="Timer" parent="."]
 wait_time = 0.25
+
+[node name="HitEffectParticles2D" type="GPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(0, -7)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_y0agt")
+lifetime = 0.5
+one_shot = true
+visibility_rect = Rect2(-15, -15, 30, 30)
 
 [connection signal="body_entered" from="DetectionArea" to="." method="DetectionAreaBodyEntered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="DetectionAreaBodyExited"]

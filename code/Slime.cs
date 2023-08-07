@@ -73,12 +73,14 @@ namespace RPGTutorial
 		public override void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
 			base.TakeDamage(damage, modifier, attackSource);
+			HitEffect.Emitting = true;
 			Timer knockedBackCooldown = GetNode<Timer>("KnockedBackCooldown");
 			knockedBackCooldown.Start();
 		}
 
 		private void OnKnockedBackCooldownDone()
 		{
+			HitEffect.Emitting = false;
 			Vector2 velocity = new(0, 0);
 			Velocity = velocity;
 			if (HitPoints > 0)
