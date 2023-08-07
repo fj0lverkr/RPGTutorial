@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace RPGTutorial.Objects
 {
-	using Model;
+    using System;
+    using Model;
 	public abstract partial class GameCharacter : CharacterBody2D
 	{
 		[Export]
@@ -13,7 +14,7 @@ namespace RPGTutorial.Objects
 		[Export]
 		public int AttackPoints = 5;
 		[Export]
-		public int HitPoints = 100;
+		public float HitPoints = 100.0f;
 		[Export]
 		public float AttackDiff = 10.0f;
 		[Export]
@@ -28,21 +29,38 @@ namespace RPGTutorial.Objects
 		public bool IsOnAttackCoolDown = false;
 
 		public string CharacterName;
+		public float StartingHitPoints = 0.0f;
 
 		public override void _Ready()
 		{
 			animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 			if (IsInGroup("Enemies"))
 			{
+				StartingHitPoints = HitPoints;
 				animatedSprite2D.Play("idle");
 			}
 		}
 
-		public virtual void TakeDamage(int damage, PlayerDirection attackSource)
+		public virtual void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
-			HitPoints -= damage;
+			HitPoints -= damage / modifier;
+			GD.Print($"{Name} is hit for {damage / modifier} damage, new HP: {HitPoints}/{StartingHitPoints}.");
 			MainState = PlayerState.KnockedBack;
 			PushedDirection = attackSource;
 		}
-	}
+
+		public void BecomeDefeated()
+		{
+			void defeatHandler() {
+				QueueFree();
+					animatedSprite2D.AnimationFinished -= defeatHandler;
+			}
+
+			if (IsInGroup("Enemies"))
+			{	RemoveFromGroup("Enemies");
+                animatedSprite2D.Play("defeat");
+                animatedSprite2D.AnimationFinished += defeatHandler;
+			}
+		}
+    }
 }

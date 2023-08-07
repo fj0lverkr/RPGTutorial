@@ -64,26 +64,22 @@ namespace RPGTutorial
 						switch (CurrentDirection) {
 							case PlayerDirection.Left:
 								if(enemy.Position.X <= Position.X && diffY <= AttackDiff) {
-									GD.Print($"{enemy.Name} is hit from the right ({diffY}).");
-									enemy.TakeDamage(AttackPoints, CurrentDirection);
+									enemy.TakeDamage(AttackPoints, diffY, CurrentDirection);
 								}
 								break;
 								case PlayerDirection.Right:
 								if(enemy.Position.X >= Position.X && diffY <= AttackDiff) {
-									GD.Print($"{enemy.Name} is hit from the left ({diffY}).");
-									enemy.TakeDamage(AttackPoints, CurrentDirection);
+									enemy.TakeDamage(AttackPoints, diffY, CurrentDirection);
 								}
 								break;
 								case PlayerDirection.Up:
 								if(enemy.Position.Y <= Position.Y && diffX <= AttackDiff) {
-									GD.Print($"{enemy.Name} is hit from the bottom ({diffX}).");
-									enemy.TakeDamage(AttackPoints, CurrentDirection);
+									enemy.TakeDamage(AttackPoints, diffX, CurrentDirection);
 								}
 								break;
 								case PlayerDirection.Down:
 								if(enemy.Position.Y >= Position.Y && diffX <= AttackDiff) {
-									GD.Print($"{enemy.Name} is hit from the top ({diffX}).");
-									enemy.TakeDamage(AttackPoints, CurrentDirection);
+									enemy.TakeDamage(AttackPoints, diffX, CurrentDirection);
 								}
 								break;
 						}

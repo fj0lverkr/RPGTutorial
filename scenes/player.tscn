@@ -224,7 +224,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_back",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -241,7 +241,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_front",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -258,7 +258,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_side",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -417,7 +417,7 @@ animations = [{
 radius = 3.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p83lw"]
-radius = 15.0
+radius = 18.0
 
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -426,7 +426,7 @@ script = ExtResource("1_52u2t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hu8rp")
-animation = &"attack_side"
+animation = &"defeat"
 offset = Vector2(0, -15)
 metadata/_edit_lock_ = true
 

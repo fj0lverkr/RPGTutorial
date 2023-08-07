@@ -10,6 +10,7 @@ namespace RPGTutorial.Model
     }
 
     public enum PlayerState {
+        None,
         Idle,
         Walking,
         Chasing,

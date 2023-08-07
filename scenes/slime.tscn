@@ -135,7 +135,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ow5hq")
 }],
-"loop": true,
+"loop": false,
 "name": &"defeat",
 "speed": 5.0
 }, {
@@ -210,18 +210,21 @@ animations = [{
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bk5t8"]
-radius = 58.0
+radius = 62.0081
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sr45l"]
+radius = 11.0
 
 [node name="slime" type="CharacterBody2D" groups=["Enemies"]]
 y_sort_enabled = true
 script = ExtResource("1_ca6ss")
 SpeedModifier = 40.0
+AttackPoints = 2
+KnockBackVelocity = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2hl5")
-animation = &"idle"
+animation = &"defeat"
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 
@@ -251,4 +254,4 @@ wait_time = 0.25
 
 [connection signal="body_entered" from="DetectionArea" to="." method="DetectionAreaBodyEntered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="DetectionAreaBodyExited"]
-[connection signal="timeout" from="KnockedBackCooldown" to="." method="_on_knocked_back_cooldown_timeout"]
+[connection signal="timeout" from="KnockedBackCooldown" to="." method="OnKnockedBackCooldownDone"]

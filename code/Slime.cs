@@ -11,72 +11,91 @@ namespace RPGTutorial
 
 		public override void _PhysicsProcess(double delta)
 		{
-			if (MainState == PlayerState.Chasing)
+			switch (MainState)
 			{
-				animatedSprite2D.FlipH = player.Position.X - Position.X < 0;
-				animatedSprite2D.Play("walk");
-				Position += (player.Position - Position) / SpeedModifier;
-				MoveAndSlide();
-			}
-			else if (MainState == PlayerState.KnockedBack)
-			{
-				Vector2 velocity = Velocity;
-				switch (PushedDirection)
-				{
-					case PlayerDirection.Down:
-						//velocity.X = 0;
-						velocity.Y = KnockBackVelocity;
+				case PlayerState.Chasing:
+					{
+						animatedSprite2D.FlipH = player.Position.X - Position.X < 0;
+						animatedSprite2D.Play("walk");
+						Position += (player.Position - Position) / SpeedModifier;
+						MoveAndSlide();
 						break;
-					case PlayerDirection.Right:
-						//velocity.Y = 0;
-						velocity.X = KnockBackVelocity;
+					}
+				case PlayerState.KnockedBack:
+					{
+						Vector2 velocity = Velocity;
+						switch (PushedDirection)
+						{
+							case PlayerDirection.Down:
+								velocity.Y = KnockBackVelocity;
+								break;
+							case PlayerDirection.Right:
+								velocity.X = KnockBackVelocity;
+								break;
+							case PlayerDirection.Up:
+								velocity.Y = -KnockBackVelocity;
+								break;
+							case PlayerDirection.Left:
+								velocity.X = -KnockBackVelocity;
+								break;
+						}
+						Velocity = velocity;
+						MoveAndSlide();
 						break;
-					case PlayerDirection.Up:
-						//velocity.X = 0;
-						velocity.Y = -KnockBackVelocity;
+					}
+				case PlayerState.Defeated:
+					{
+						BecomeDefeated();
+						MainState = PlayerState.None;
 						break;
-					case PlayerDirection.Left:
-						//velocity.Y = 0;
-						velocity.X = -KnockBackVelocity;
-						break;
-				}
-				Velocity = velocity;
-				MoveAndSlide();
+					}
 			}
 		}
 
 		private void DetectionAreaBodyEntered(Node2D body)
 		{
-			player = body;
-			MainState = PlayerState.Chasing;
+			if (MainState != PlayerState.None && MainState != PlayerState.Defeated && MainState != PlayerState.KnockedBack)
+			{
+				player = body;
+				MainState = PlayerState.Chasing;
+			}
 		}
 
 		private void DetectionAreaBodyExited(Node2D body)
 		{
-			player = null;
-			MainState = PlayerState.Idle;
+			if (body == player && MainState != PlayerState.None && MainState != PlayerState.Defeated && MainState != PlayerState.KnockedBack)
+			{
+				player = null;
+				MainState = PlayerState.Idle;
+			}
 		}
 
-		public override void TakeDamage(int damage, PlayerDirection attackSource)
+		public override void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
-			base.TakeDamage(damage, attackSource);
+			base.TakeDamage(damage, modifier, attackSource);
 			Timer knockedBackCooldown = GetNode<Timer>("KnockedBackCooldown");
 			knockedBackCooldown.Start();
 		}
 
-		private void _on_knocked_back_cooldown_timeout()
+		private void OnKnockedBackCooldownDone()
 		{
-			Vector2 velocity = new(0,0);
+			Vector2 velocity = new(0, 0);
 			Velocity = velocity;
-			if (player != null)
+			if (HitPoints > 0)
 			{
-				MainState = PlayerState.Chasing;
+				if (player != null)
+				{
+					MainState = PlayerState.Chasing;
+				}
+				else
+				{
+					MainState = PlayerState.Idle;
+				}
 			}
 			else
 			{
-				MainState = PlayerState.Idle;
+				MainState = PlayerState.Defeated;
 			}
-
 		}
 	}
 }

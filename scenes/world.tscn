@@ -181,7 +181,4 @@ position = Vector2(47, 70)
 [node name="slime" parent="." instance=ExtResource("5_7bsd4")]
 z_index = 1
 position = Vector2(157, 126)
-Speed = 100.0
-AttackPoints = 5
-HitPoints = 100
-AttackDiff = 10.0
+HitPoints = 100.0
