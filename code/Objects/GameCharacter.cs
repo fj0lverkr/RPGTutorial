@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace RPGTutorial.Objects
 {
-    using System;
-    using Model;
+	using Model;
 	public abstract partial class GameCharacter : CharacterBody2D
 	{
 		[Export]
@@ -19,6 +18,10 @@ namespace RPGTutorial.Objects
 		public float AttackDiff = 10.0f;
 		[Export]
 		public int KnockBackVelocity = 200;
+
+
+		[Signal]
+		public delegate void CharacterDefeatedEventHandler();
 
 		public PlayerDirection CurrentDirection = PlayerDirection.Down;
 		public PlayerDirection PushedDirection;
@@ -45,24 +48,29 @@ namespace RPGTutorial.Objects
 
 		public virtual void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
+			modifier = modifier < 0.5 || modifier == 0 ? 0.5f : modifier; // prevent over-damage and division by zero
+			modifier = modifier > 5 ? 5 : modifier; //prevent under-damage
 			HitPoints -= damage / modifier;
-			GD.Print($"{Name} is hit for {damage / modifier} damage, new HP: {HitPoints}/{StartingHitPoints}.");
+			GD.Print($"{Name} is hit for {damage}/{modifier} = {damage / modifier} damage, new HP: {HitPoints}/{StartingHitPoints}.");
 			MainState = PlayerState.KnockedBack;
 			PushedDirection = attackSource;
 		}
 
 		public void BecomeDefeated()
 		{
-			void defeatHandler() {
+			void defeatHandler()
+			{
+				EmitSignal(SignalName.CharacterDefeated);
 				QueueFree();
-					animatedSprite2D.AnimationFinished -= defeatHandler;
+				animatedSprite2D.AnimationFinished -= defeatHandler;
 			}
 
 			if (IsInGroup("Enemies"))
-			{	RemoveFromGroup("Enemies");
-                animatedSprite2D.Play("defeat");
-                animatedSprite2D.AnimationFinished += defeatHandler;
+			{
+				RemoveFromGroup("Enemies");
+				animatedSprite2D.Play("defeat");
+				animatedSprite2D.AnimationFinished += defeatHandler;
 			}
 		}
-    }
+	}
 }

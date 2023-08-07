@@ -31,6 +31,7 @@ namespace RPGTutorial
 			slime.Speed = 35;
 			enemiesOnScene.Add(slime);
 			slime.Position = new Vector2(100, 175);
+			slime.CharacterDefeated += () => enemiesOnScene.Remove(slime);
 			player.Name = "Berry";
 			player.Position = new Vector2(25, 55);
 			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
