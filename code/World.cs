@@ -14,11 +14,11 @@ namespace RPGTutorial
 		[Export]
 		public int MinX = 0;
 		[Export]
-		public int MaxX = 192;
+		public int MaxX = 416;
 		[Export]
 		public int MinY = 0;
 		[Export]
-		public int MaxY = 416;
+		public int MaxY = 192;
 
 
 		private readonly List<GameCharacter> enemiesOnScene = new();
