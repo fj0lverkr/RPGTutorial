@@ -153,8 +153,6 @@ y_sort_enabled = true
 script = ExtResource("1_g8nap")
 SlimeScene = ExtResource("5_7bsd4")
 PlayerScene = ExtResource("4_3nisd")
-MaxX = 416
-MaxY = 192
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
