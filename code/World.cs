@@ -9,16 +9,32 @@ namespace RPGTutorial
 	{
 		[Export]
 		public PackedScene SlimeScene { get; set; }
+		[Export]
+		public PackedScene PlayerScene { get; set; }
+		[Export]
+		public int MinX = 0;
+		[Export]
+		public int MaxX = 192;
+		[Export]
+		public int MinY = 0;
+		[Export]
+		public int MaxY = 416;
+
 
 		private readonly List<GameCharacter> enemiesOnScene = new();
 
 		public override void _Ready()
 		{
 			Slime slime = SlimeScene.Instantiate<Slime>();
+			Player player = PlayerScene.Instantiate<Player>();
 			slime.Name = "Jefke";
 			slime.Speed = 35;
 			enemiesOnScene.Add(slime);
-			slime.Position = new Vector2(10, 10);
+			slime.Position = new Vector2(100, 175);
+			player.Name = "Berry";
+			player.Position = new Vector2(25, 55);
+			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
+			AddChild(player);
 			AddChild(slime);
 		}
 	}

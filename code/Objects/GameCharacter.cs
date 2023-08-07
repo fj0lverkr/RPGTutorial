@@ -12,7 +12,7 @@ namespace RPGTutorial.Objects
 		[Export]
 		public float Speed = 100.0f;
 		[Export]
-		public int AttackPoints = 5;
+		public int AttackPoints = 3;
 		[Export]
 		public float HitPoints = 100.0f;
 		[Export]
@@ -30,6 +30,7 @@ namespace RPGTutorial.Objects
 
 		public string CharacterName;
 		public float StartingHitPoints = 0.0f;
+
 
 		public override void _Ready()
 		{

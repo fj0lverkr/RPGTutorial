@@ -11,9 +11,31 @@ namespace RPGTutorial
 
 	public partial class Player : GameCharacter
 	{
+
+
+		private Vector2 mapBoundMin;
+		private Vector2 mapBoundMax;
+		private Camera2D playerCam;
+
+		public override void _Ready()
+		{
+			base._Ready();
+ 			playerCam = GetNode<Camera2D>("Camera2D");
+			playerCam.LimitBottom = (int)mapBoundMax.Y;
+			playerCam.LimitTop = (int)mapBoundMin.Y;
+			playerCam.LimitLeft = (int)mapBoundMin.X;
+			playerCam.LimitRight = (int)mapBoundMax.X; 
+		}
+
 		public override void _PhysicsProcess(double delta)
 		{
 			if (CurrentState != PlayerState.Attacking) PlayerMovement(delta);
+		}
+
+		public void SetMapBoundaries(int minX, int maxX, int minY, int maxY)
+		{
+			mapBoundMin = new(minX, minY);
+			mapBoundMax = new(maxX, maxY);
 		}
 
 		public void PlayerMovement(double delta)
@@ -61,24 +83,29 @@ namespace RPGTutorial
 					{
 						float diffY = Math.Abs(enemy.Position.Y - Position.Y);
 						float diffX = Math.Abs(enemy.Position.X - Position.X);
-						switch (CurrentDirection) {
+						switch (CurrentDirection)
+						{
 							case PlayerDirection.Left:
-								if(enemy.Position.X <= Position.X && diffY <= AttackDiff) {
+								if (enemy.Position.X <= Position.X && diffY <= AttackDiff)
+								{
 									enemy.TakeDamage(AttackPoints, diffY, CurrentDirection);
 								}
 								break;
-								case PlayerDirection.Right:
-								if(enemy.Position.X >= Position.X && diffY <= AttackDiff) {
+							case PlayerDirection.Right:
+								if (enemy.Position.X >= Position.X && diffY <= AttackDiff)
+								{
 									enemy.TakeDamage(AttackPoints, diffY, CurrentDirection);
 								}
 								break;
-								case PlayerDirection.Up:
-								if(enemy.Position.Y <= Position.Y && diffX <= AttackDiff) {
+							case PlayerDirection.Up:
+								if (enemy.Position.Y <= Position.Y && diffX <= AttackDiff)
+								{
 									enemy.TakeDamage(AttackPoints, diffX, CurrentDirection);
 								}
 								break;
-								case PlayerDirection.Down:
-								if(enemy.Position.Y >= Position.Y && diffX <= AttackDiff) {
+							case PlayerDirection.Down:
+								if (enemy.Position.Y >= Position.Y && diffX <= AttackDiff)
+								{
 									enemy.TakeDamage(AttackPoints, diffX, CurrentDirection);
 								}
 								break;

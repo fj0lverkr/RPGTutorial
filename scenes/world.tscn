@@ -152,6 +152,9 @@ sources/3 = SubResource("TileSetAtlasSource_scc1o")
 y_sort_enabled = true
 script = ExtResource("1_g8nap")
 SlimeScene = ExtResource("5_7bsd4")
+PlayerScene = ExtResource("4_3nisd")
+MaxX = 416
+MaxY = 192
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -173,11 +176,3 @@ layer_2/y_sort_enabled = true
 layer_2/y_sort_origin = 0
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(65560, 655363, 7, 655361, 655363, 7, 65541, 655363, 7, 589848, 3, 5, 262160, 3, 5, 65544, 3, 5, 327685, 393219, 7, 393216, 393219, 7, 65556, 393219, 7, 65550, 524291, 6, 196620, 3, 0, 131076, 3, 1, 22, 3, 1, 65546, 327683, 0, 655369, 393219, 7, 720914, 393219, 7)
-
-[node name="Player" parent="." instance=ExtResource("4_3nisd")]
-z_index = 1
-position = Vector2(47, 70)
-
-[node name="slime" parent="." instance=ExtResource("5_7bsd4")]
-z_index = 1
-position = Vector2(157, 126)

@@ -426,7 +426,7 @@ script = ExtResource("1_52u2t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hu8rp")
-animation = &"attack_side"
+animation = &"idle_side"
 offset = Vector2(0, -15)
 metadata/_edit_lock_ = true
 
@@ -440,6 +440,17 @@ position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_p83lw")
 
 [node name="EnemyAttackCooldown" type="Timer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 416
+limit_bottom = 192
+limit_smoothed = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
 [connection signal="body_entered" from="PlayerAttackArea" to="." method="OnPlayerAttackAreaBodyEntered"]
