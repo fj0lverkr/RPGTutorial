@@ -34,6 +34,7 @@ namespace RPGTutorial.Objects
 
 		public override void _Ready()
 		{
+			ZIndex = 1;
 			animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 			if (IsInGroup("Enemies"))
 			{
