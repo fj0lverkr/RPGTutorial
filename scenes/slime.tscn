@@ -235,7 +235,7 @@ KnockBackVelocity = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2hl5")
-animation = &"defeat"
+animation = &"walk"
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 
