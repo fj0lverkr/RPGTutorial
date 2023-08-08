@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b624joebxv7ed"]
+[gd_scene load_steps=13 format=3 uid="uid://b624joebxv7ed"]
 
 [ext_resource type="Texture2D" uid="uid://wibtgplknbja" path="res://art/tilesets/plains.png" id="1_d4xss"]
 [ext_resource type="Script" path="res://code/World.cs" id="1_g8nap"]
@@ -148,6 +148,12 @@ sources/0 = SubResource("TileSetAtlasSource_ipo52")
 sources/2 = SubResource("TileSetAtlasSource_u7sdx")
 sources/3 = SubResource("TileSetAtlasSource_scc1o")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkuhn"]
+size = Vector2(13, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3gt4"]
+size = Vector2(17, 39)
+
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_g8nap")
@@ -180,3 +186,16 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBoundaries"]
 polygon = PackedVector2Array(0, 0, 0, 6, -13, 6, -13, 64, 0, 64, 0, 192, 416, 192, 416, 123, 433, 123, 433, 83, 416, 84, 416, 62, 375, 63, 371, 58, 371, 47, 369, 46, 351, 46, 351, 58, 348, 61, 343, 62, 322, 63, 307, 63, 295, 63, 292, 59, 290, 46, 291, 31, 286, 29, 280, 31, 276, 26, 275, 8, 275, 0, 5, 0, 5, -6, 445, -6, 445, 201, -20, 201, -20, 0)
+metadata/_edit_lock_ = true
+
+[node name="ExitLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitLeft"]
+position = Vector2(-6.5, 35)
+shape = SubResource("RectangleShape2D_wkuhn")
+
+[node name="ExitRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitRight"]
+position = Vector2(424.5, 103.5)
+shape = SubResource("RectangleShape2D_i3gt4")

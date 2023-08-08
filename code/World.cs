@@ -38,5 +38,18 @@ namespace RPGTutorial
 			AddChild(player);
 			AddChild(slime);
 		}
+
+		private void OnExitLeftEntered(Node2D body)
+		{
+			if (!body.IsInGroup("Enemies")){
+				//assume the player is then the one that entered
+				GlobalNode.TransitionScene = true;
+			}
+		}
+
+		private void OnExitLeftExited(Node2D body)
+		{
+			// Replace with function body.
+		}
 	}
 }
