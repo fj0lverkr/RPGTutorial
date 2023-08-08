@@ -199,3 +199,6 @@ shape = SubResource("RectangleShape2D_wkuhn")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitRight"]
 position = Vector2(424.5, 103.5)
 shape = SubResource("RectangleShape2D_i3gt4")
+
+[connection signal="body_entered" from="ExitLeft" to="." method="OnExitLeftEntered"]
+[connection signal="body_exited" from="ExitLeft" to="." method="OnExitLeftExited"]
