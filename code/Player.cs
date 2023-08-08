@@ -46,14 +46,14 @@ namespace RPGTutorial
 			{
 				CurrentDirection = PlayerDirection.Right;
 				CurrentState = PlayerState.Walking;
-				velocity.X = Position.X < mapBoundMax.X - 5 ? Speed : 0;
+				velocity.X = Speed;
 				velocity.Y = 0;
 			}
 			else if (Input.IsActionPressed("move_left"))
 			{
 				CurrentDirection = PlayerDirection.Left;
 				CurrentState = PlayerState.Walking;
-				velocity.X = Position.X > mapBoundMin.X + 5 ? -Speed : 0;
+				velocity.X = -Speed;
 				velocity.Y = 0;
 			}
 			else if (Input.IsActionPressed("move_up"))
@@ -61,14 +61,14 @@ namespace RPGTutorial
 				CurrentDirection = PlayerDirection.Up;
 				CurrentState = PlayerState.Walking;
 				velocity.X = 0;
-				velocity.Y = Position.Y > mapBoundMin.Y + 5 ? -Speed : 0;
+				velocity.Y = -Speed;
 			}
 			else if (Input.IsActionPressed("move_down"))
 			{
 				CurrentDirection = PlayerDirection.Down;
 				CurrentState = PlayerState.Walking;
 				velocity.X = 0;
-				velocity.Y = Position.Y < mapBoundMax.Y ? Speed : 0;
+				velocity.Y = Speed;
 			}
 			else if (Input.IsActionPressed("attack"))
 			{

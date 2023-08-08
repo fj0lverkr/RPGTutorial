@@ -45,15 +45,12 @@ texture = ExtResource("1_d4xss")
 2:6/0 = 0
 2:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:6/0/physics_layer_0/angular_velocity = 0.0
-2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 8, -3.25, 8, 6.75, -8, 6.875)
 3:6/0 = 0
 3:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:6/0/physics_layer_0/angular_velocity = 0.0
-3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3, 3.6875, -4.625, 3.8125, -8, 6.6875, -8, 6.8125, 2.625, 4.6875, 7, -8, 6.875)
 1:6/0 = 0
 1:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:6/0/physics_layer_0/angular_velocity = 0.0
-1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.6875, -8, -1.4375, -8, 1.0625, -3.25, 8, -2.375, 8, 6.875, 0.9375, 6.75, -1.8125, 5.375, -4.6875, 2.25)
 1:5/0 = 0
 1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:5/0/physics_layer_0/angular_velocity = 0.0
@@ -177,3 +174,9 @@ layer_2/y_sort_enabled = true
 layer_2/y_sort_origin = 0
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(65560, 655363, 7, 655361, 655363, 7, 65541, 655363, 7, 589848, 3, 5, 262160, 3, 5, 65544, 3, 5, 327685, 393219, 7, 393216, 393219, 7, 65556, 393219, 7, 65550, 524291, 6, 196620, 3, 0, 131076, 3, 1, 22, 3, 1, 65546, 327683, 0, 655369, 393219, 7, 720914, 393219, 7)
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBoundaries"]
+polygon = PackedVector2Array(0, 0, 0, 6, -13, 6, -13, 64, 0, 64, 0, 192, 416, 192, 416, 123, 433, 123, 433, 83, 416, 84, 416, 62, 375, 63, 371, 58, 371, 47, 369, 46, 351, 46, 351, 58, 348, 61, 343, 62, 322, 63, 307, 63, 295, 63, 292, 59, 290, 46, 291, 31, 286, 29, 280, 31, 276, 26, 275, 8, 275, 0, 5, 0, 5, -6, 445, -6, 445, 201, -20, 201, -20, 0)
