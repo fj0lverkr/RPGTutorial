@@ -22,6 +22,8 @@ namespace RPGTutorial
 
 
 		private readonly List<GameCharacter> enemiesOnScene = new();
+		private readonly Vector2 playerSpawnLeft = new(5, 50);
+		private readonly Vector2 playerSpawnRight = new(416, 104);
 
 		public override void _Ready()
 		{
@@ -33,8 +35,16 @@ namespace RPGTutorial
 			slime.Position = new Vector2(100, 175);
 			slime.CharacterDefeated += () => enemiesOnScene.Remove(slime);
 			player.Name = "Berry";
-			player.Position = GlobalNode.PlayerSpawnLeft;
-			player.CurrentDirection = GlobalNode.PlayerSpawnLeftFacing;
+			if (GlobalNode.PreviousScene == "world" || GlobalNode.PreviousScene == "leftScene")
+			{
+				player.Position = playerSpawnLeft;
+				player.CurrentDirection = GlobalNode.PlayerSpawnLeftFacing;
+			}
+			else
+			{
+				player.Position = playerSpawnRight;
+				player.CurrentDirection = GlobalNode.PlayerSpawnRightFacing;
+			}
 			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
 			AddChild(player);
 			AddChild(slime);
@@ -42,16 +52,20 @@ namespace RPGTutorial
 
 		private void OnExitLeftEntered(Node2D body)
 		{
-			if (!body.IsInGroup("Enemies"))
+			if (body.IsInGroup("MC"))
 			{
-				//assume the player is then the one that entered
-				GlobalNode.TransitionScene = true;
+				GlobalNode.PreviousScene = GlobalNode.CurrentScene;
+				GlobalNode.CurrentScene = "leftScene";
+				GetTree().ChangeSceneToFile("res://scenes/left_scene.tscn");
 			}
 		}
 
 		private void OnExitLeftExited(Node2D body)
 		{
-			// Replace with function body.
+			if (body.IsInGroup("MC"))
+			{
+				GlobalNode.TransitionScene = false;
+			}
 		}
 	}
 }

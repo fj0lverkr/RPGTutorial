@@ -419,7 +419,7 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_p83lw"]
 radius = 18.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["MC"]]
 y_sort_enabled = true
 collision_layer = 3
 script = ExtResource("1_52u2t")
@@ -441,7 +441,7 @@ shape = SubResource("CircleShape2D_p83lw")
 
 [node name="EnemyAttackCooldown" type="Timer" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="WorldCamera" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -451,6 +451,9 @@ limit_smoothed = true
 rotation_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="LeftSceneCamera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
 [connection signal="body_entered" from="PlayerAttackArea" to="." method="OnPlayerAttackAreaBodyEntered"]

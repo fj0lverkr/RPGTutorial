@@ -149,7 +149,7 @@ sources/2 = SubResource("TileSetAtlasSource_u7sdx")
 sources/3 = SubResource("TileSetAtlasSource_scc1o")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkuhn"]
-size = Vector2(13, 58)
+size = Vector2(6.56688, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3gt4"]
 size = Vector2(17, 39)
@@ -189,15 +189,16 @@ polygon = PackedVector2Array(0, 0, 0, 6, -13, 6, -13, 64, 0, 64, 0, 192, 416, 19
 metadata/_edit_lock_ = true
 
 [node name="ExitLeft" type="Area2D" parent="."]
+position = Vector2(-6.70883, 35.0677)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitLeft"]
-position = Vector2(-6.5, 35)
+position = Vector2(-3.19961, -0.10743)
 shape = SubResource("RectangleShape2D_wkuhn")
 
 [node name="ExitRight" type="Area2D" parent="."]
+position = Vector2(424.474, 103.315)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitRight"]
-position = Vector2(424.5, 103.5)
 shape = SubResource("RectangleShape2D_i3gt4")
 
 [connection signal="body_entered" from="ExitLeft" to="." method="OnExitLeftEntered"]

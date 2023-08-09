@@ -16,19 +16,16 @@ namespace RPGTutorial
 		private Vector2 mapBoundMin;
 		private Vector2 mapBoundMax;
 		private Camera2D playerCam;
+		private string currentCameraName = "WorldCamera";
 
 		public override void _Ready()
 		{
 			base._Ready();
- 			playerCam = GetNode<Camera2D>("Camera2D");
-			playerCam.LimitBottom = (int)mapBoundMax.Y;
-			playerCam.LimitTop = (int)mapBoundMin.Y;
-			playerCam.LimitLeft = (int)mapBoundMin.X;
-			playerCam.LimitRight = (int)mapBoundMax.X; 
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
+			UpdateCurrentCamera();
 			if (CurrentState != PlayerState.Attacking) PlayerMovement(delta);
 		}
 
@@ -183,6 +180,40 @@ namespace RPGTutorial
 						break;
 					}
 			}
+		}
+
+		private void UpdateCurrentCamera()
+		{
+			Camera2D worldCamera = GetNode<Camera2D>("WorldCamera");
+			Camera2D leftSceneCamera = GetNode<Camera2D>("LeftSceneCamera");
+
+			switch (GlobalNode.CurrentScene)
+			{
+				case "world":
+					{
+						currentCameraName = "WorldCamera";
+						worldCamera.Enabled = true;
+						leftSceneCamera.Enabled = false;
+						break;
+					}
+				case "leftScene":
+					{
+						currentCameraName = "LeftSceneCamera";
+						worldCamera.Enabled = false;
+						leftSceneCamera.Enabled = true;
+						break;
+					}
+				case "rightScene": break;
+			}
+			SetupCamera();
+		}
+
+		private void SetupCamera(){
+			playerCam = GetNode<Camera2D>(currentCameraName);
+			playerCam.LimitBottom = (int)mapBoundMax.Y;
+			playerCam.LimitTop = (int)mapBoundMin.Y;
+			playerCam.LimitLeft = (int)mapBoundMin.X;
+			playerCam.LimitRight = (int)mapBoundMax.X;
 		}
 
 		private void OnAnimationFinished()
