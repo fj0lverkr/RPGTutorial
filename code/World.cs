@@ -12,13 +12,13 @@ namespace RPGTutorial
 		[Export]
 		public PackedScene PlayerScene { get; set; }
 		[Export]
-		public int MinX = 0;
+		public int MinX { get; set; } = 0;
 		[Export]
-		public int MaxX = 416;
+		public int MaxX { get; set; } = 416;
 		[Export]
-		public int MinY = 0;
+		public int MinY { get; set; } = 0;
 		[Export]
-		public int MaxY = 192;
+		public int MaxY { get; set; } = 192;
 
 
 		private readonly List<GameCharacter> enemiesOnScene = new();
@@ -33,7 +33,8 @@ namespace RPGTutorial
 			slime.Position = new Vector2(100, 175);
 			slime.CharacterDefeated += () => enemiesOnScene.Remove(slime);
 			player.Name = "Berry";
-			player.Position = new Vector2(25, 55);
+			player.Position = GlobalNode.PlayerSpawnLeft;
+			player.CurrentDirection = GlobalNode.PlayerSpawnLeftFacing;
 			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
 			AddChild(player);
 			AddChild(slime);
@@ -41,7 +42,8 @@ namespace RPGTutorial
 
 		private void OnExitLeftEntered(Node2D body)
 		{
-			if (!body.IsInGroup("Enemies")){
+			if (!body.IsInGroup("Enemies"))
+			{
 				//assume the player is then the one that entered
 				GlobalNode.TransitionScene = true;
 			}
