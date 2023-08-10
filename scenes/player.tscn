@@ -452,9 +452,6 @@ rotation_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
-[node name="LeftSceneCamera" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
-
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="OnAnimationFinished"]
 [connection signal="body_entered" from="PlayerAttackArea" to="." method="OnPlayerAttackAreaBodyEntered"]
 [connection signal="body_exited" from="PlayerAttackArea" to="." method="OnPlayerAttackAreaBodyExited"]
