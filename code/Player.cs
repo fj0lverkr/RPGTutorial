@@ -21,11 +21,11 @@ namespace RPGTutorial
 		public override void _Ready()
 		{
 			base._Ready();
+			SetupCamera();
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
-			UpdateCurrentCamera();
 			if (CurrentState != PlayerState.Attacking) PlayerMovement(delta);
 		}
 
@@ -180,32 +180,6 @@ namespace RPGTutorial
 						break;
 					}
 			}
-		}
-
-		private void UpdateCurrentCamera()
-		{
-			Camera2D worldCamera = GetNode<Camera2D>("WorldCamera");
-			Camera2D leftSceneCamera = GetNode<Camera2D>("LeftSceneCamera");
-
-			switch (GlobalNode.CurrentScene)
-			{
-				case "world":
-					{
-						currentCameraName = "WorldCamera";
-						worldCamera.Enabled = true;
-						leftSceneCamera.Enabled = false;
-						break;
-					}
-				case "leftScene":
-					{
-						currentCameraName = "LeftSceneCamera";
-						worldCamera.Enabled = false;
-						leftSceneCamera.Enabled = true;
-						break;
-					}
-				case "rightScene": break;
-			}
-			SetupCamera();
 		}
 
 		private void SetupCamera(){

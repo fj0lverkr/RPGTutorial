@@ -34,7 +34,8 @@ namespace RPGTutorial
 			enemiesOnScene.Add(slime);
 			slime.Position = new Vector2(100, 175);
 			slime.CharacterDefeated += () => enemiesOnScene.Remove(slime);
-			player.Name = "Berry";
+			player.Name = GlobalNode.PLayerName;
+			player.HitPoints = GlobalNode.PlayerHP;
 			if (GlobalNode.PreviousScene == "world" || GlobalNode.PreviousScene == "leftScene")
 			{
 				player.Position = playerSpawnLeft;

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://dnye2rgrkl6ot"]
 
-[ext_resource type="Script" path="res://scenes/LeftScene.cs" id="1_jt8mv"]
+[ext_resource type="Script" path="res://code/LeftScene.cs" id="1_6pd85"]
 [ext_resource type="Texture2D" uid="uid://wibtgplknbja" path="res://art/tilesets/plains.png" id="1_xfi2y"]
 [ext_resource type="Texture2D" uid="uid://do3dmgxdarfb1" path="res://art/tilesets/grass.png" id="2_0yjub"]
 [ext_resource type="PackedScene" uid="uid://bi8jxonvf5c4j" path="res://scenes/player.tscn" id="2_jr6fs"]
@@ -152,7 +152,7 @@ size = Vector2(65, 89)
 
 [node name="leftScene" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_jt8mv")
+script = ExtResource("1_6pd85")
 PlayerScene = ExtResource("2_jr6fs")
 
 [node name="TileMap" type="TileMap" parent="."]
