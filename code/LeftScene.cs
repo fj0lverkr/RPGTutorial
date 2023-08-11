@@ -2,18 +2,17 @@ using Godot;
 
 namespace RPGTutorial
 {
+	using Model;
+
 	public partial class LeftScene : Node2D
 	{
 		[Export]
 		public PackedScene PlayerScene { get; set; }
-		[Export]
-		public int MinX { get; set; } = 0;
-		[Export]
-		public int MaxX { get; set; } = 495;
-		[Export]
-		public int MinY { get; set; } = 0;
-		[Export]
-		public int MaxY { get; set; } = 495;
+
+		public int MinX = 0;
+		public int MaxX = 495;
+		public int MinY= 0;
+		public int MaxY = 495;
 
 		private readonly Vector2 playerSpawn = new(490, 220);
 
@@ -23,7 +22,7 @@ namespace RPGTutorial
 			player.Name = GlobalNode.PLayerName;
 			player.HitPoints = GlobalNode.PlayerHP;
 			player.Position = playerSpawn;
-			player.CurrentDirection = GlobalNode.PlayerSpawnLeftFacing;
+			player.CurrentDirection = PlayerDirection.Left;
 			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
 			AddChild(player);
 		}

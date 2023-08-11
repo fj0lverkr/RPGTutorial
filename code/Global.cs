@@ -12,9 +12,5 @@ namespace RPGTutorial {
         //Relates to MC
         public static float PlayerHP {get; set;}
         public static string PLayerName {get; set;} = "Berry";
-        public static Vector2 PlayerSpawnLeft {get; set;} = new(20, 50);
-        public const PlayerDirection PlayerSpawnLeftFacing = PlayerDirection.Right;
-        public static Vector2 PlayerSpawnRight {get; set;} = new(416, 104);
-        public const PlayerDirection PlayerSpawnRightFacing = PlayerDirection.Left;
     }
 }

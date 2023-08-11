@@ -5,21 +5,18 @@ using Godot;
 namespace RPGTutorial
 {
 	using Objects;
+	using Model;
 	public partial class World : Node2D
 	{
 		[Export]
 		public PackedScene SlimeScene { get; set; }
 		[Export]
 		public PackedScene PlayerScene { get; set; }
-		[Export]
-		public int MinX { get; set; } = 0;
-		[Export]
-		public int MaxX { get; set; } = 416;
-		[Export]
-		public int MinY { get; set; } = 0;
-		[Export]
-		public int MaxY { get; set; } = 192;
-
+		
+		public int MinX = 0;
+		public int MaxX = 416;
+		public int MinY = 0;
+		public int MaxY = 192;
 
 		private readonly List<GameCharacter> enemiesOnScene = new();
 		private readonly Vector2 playerSpawnLeft = new(5, 50);
@@ -39,12 +36,12 @@ namespace RPGTutorial
 			if (GlobalNode.PreviousScene == "world" || GlobalNode.PreviousScene == "leftScene")
 			{
 				player.Position = playerSpawnLeft;
-				player.CurrentDirection = GlobalNode.PlayerSpawnLeftFacing;
+				player.CurrentDirection = PlayerDirection.Right;
 			}
 			else
 			{
 				player.Position = playerSpawnRight;
-				player.CurrentDirection = GlobalNode.PlayerSpawnRightFacing;
+				player.CurrentDirection = PlayerDirection.Left;
 			}
 			player.SetMapBoundaries(MinX, MaxX, MinY, MaxY);
 			AddChild(player);
