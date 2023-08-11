@@ -148,7 +148,7 @@ sources/2 = SubResource("TileSetAtlasSource_u7sdx")
 sources/3 = SubResource("TileSetAtlasSource_scc1o")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dnial"]
-size = Vector2(65, 89)
+size = Vector2(48.5, 89)
 
 [node name="leftScene" type="Node2D"]
 y_sort_enabled = true
@@ -186,5 +186,7 @@ polygon = PackedVector2Array(494, 14, 477, 14, 476, 18, 477, 43, 473, 46, 62, 46
 position = Vector2(528, 224)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+position = Vector2(8.25, 0)
 shape = SubResource("RectangleShape2D_dnial")
-metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="Exit" to="." method="OnExitEntered"]

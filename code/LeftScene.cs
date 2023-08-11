@@ -30,17 +30,18 @@ namespace RPGTutorial
 
 		private void OnExitEntered(Node2D body)
 		{
-			if (!body.IsInGroup("Enemies"))
+			if (body.IsInGroup("MC"))
 			{
-				//assume the player is then the one that entered
+				GlobalNode.PreviousScene = GlobalNode.CurrentScene;
+				GlobalNode.CurrentScene = "world";
 				GlobalNode.TransitionScene = true;
-				//GetTree().ChangeSceneToFile("res://scenes/left_scene.tscn");
+				GetTree().ChangeSceneToFile("res://scenes/world.tscn");
 			}
 		}
 
 		private void OnExitExited(Node2D body)
 		{
-			if (!body.IsInGroup("Enemies"))
+			if (body.IsInGroup("MC"))
 			{
 				GlobalNode.TransitionScene = false;
 			}
