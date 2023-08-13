@@ -236,6 +236,7 @@ KnockBackVelocity = 100
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2hl5")
 animation = &"walk"
+frame_progress = 0.166208
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 
@@ -275,6 +276,15 @@ process_material = SubResource("ParticleProcessMaterial_y0agt")
 lifetime = 0.5
 one_shot = true
 visibility_rect = Rect2(-15, -15, 30, 30)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(0.207843, 0.627451, 0, 1)
+offset_left = -10.0
+offset_top = -19.0
+offset_right = 190.0
+offset_bottom = 8.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [connection signal="body_entered" from="DetectionArea" to="." method="DetectionAreaBodyEntered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="DetectionAreaBodyExited"]

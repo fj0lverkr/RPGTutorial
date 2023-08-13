@@ -11,6 +11,7 @@ namespace RPGTutorial
 
 		public override void _PhysicsProcess(double delta)
 		{
+			base._PhysicsProcess(delta);
 			switch (MainState)
 			{
 				case PlayerState.Chasing:

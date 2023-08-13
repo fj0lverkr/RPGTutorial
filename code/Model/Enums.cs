@@ -19,4 +19,10 @@ namespace RPGTutorial.Model
         Dazed,
         Defeated
     }
+
+    public enum GameCharacterType {
+        Player,
+        Slime,
+        Skeleton
+    }
 }

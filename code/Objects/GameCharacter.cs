@@ -1,8 +1,10 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 
 namespace RPGTutorial.Objects
 {
+
 	using Model;
 	public abstract partial class GameCharacter : CharacterBody2D
 	{
@@ -13,7 +15,7 @@ namespace RPGTutorial.Objects
 		[Export]
 		public int AttackPoints = 3;
 		[Export]
-		public float HitPoints = 100.0f;
+		public float MaxHitPoints = 100.0f;
 		[Export]
 		public float AttackDiff = 10.0f;
 		[Export]
@@ -31,29 +33,40 @@ namespace RPGTutorial.Objects
 		public List<Node2D> EnemiesInMeleeRange = new();
 		public bool IsOnAttackCoolDown = false;
 		public GpuParticles2D HitEffect;
-
+		public ProgressBar HealthBar;
+		public string CharacterId = Guid.NewGuid().ToString();
+		public GameCharacterType CharacterType;
 		public string CharacterName;
-		public float StartingHitPoints = 0.0f;
+		public float HitPoints = 0.0f;
 
 
 		public override void _Ready()
 		{
 			ZIndex = 1;
 			animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+			HealthBar = GetNode<ProgressBar>("HealthBar");
+			HealthBar.MaxValue = MaxHitPoints;
+
 			if (IsInGroup("Enemies"))
 			{
 				HitEffect = GetNode<GpuParticles2D>("HitEffectParticles2D");
-				StartingHitPoints = HitPoints;
+				HitPoints = MaxHitPoints;
 				animatedSprite2D.Play("idle");
 			}
 		}
 
+		public override void _PhysicsProcess(double delta)
+		{
+			HealthBar.Value = HitPoints;
+			HealthBar.Visible = HealthBar.Value < MaxHitPoints;
+		}
+
 		public virtual void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
-			modifier = modifier < 0.1 || modifier == 0 ? 0.1f : modifier; // prevent over-damage and division by zero
+			modifier = modifier < 0.05 || modifier == 0 ? 0.05f : modifier; // prevent over-damage and division by zero
 			modifier = modifier > 5 ? 5 : modifier; //prevent under-damage
 			HitPoints -= damage / modifier;
-			GD.Print($"{Name} is hit for {damage}/{modifier} = {damage / modifier} damage, new HP: {HitPoints}/{StartingHitPoints}.");
+			GD.Print($"{Name} is hit for {damage}/{modifier} = {damage / modifier} damage, new HP: {HitPoints}/{MaxHitPoints}.");
 			MainState = PlayerState.KnockedBack;
 			PushedDirection = attackSource;
 		}
