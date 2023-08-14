@@ -265,7 +265,7 @@ shape = SubResource("CircleShape2D_sr45l")
 metadata/_edit_lock_ = true
 
 [node name="KnockedBackCooldown" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.5
 
 [node name="HitEffectParticles2D" type="GPUParticles2D" parent="."]
 z_index = 2

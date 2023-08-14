@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace RPGTutorial
@@ -17,9 +18,39 @@ namespace RPGTutorial
 				case PlayerState.Chasing:
 					{
 						animatedSprite2D.FlipH = player.Position.X - Position.X < 0;
-						animatedSprite2D.Play("walk");
-						Position += (player.Position - Position) / SpeedModifier;
-						MoveAndSlide();
+						float distance = Position.DistanceSquaredTo(player.Position);
+						if (distance <= 200)
+						{
+							animatedSprite2D.Play("walk");
+							Vector2 velocity = Velocity;
+							Vector2 playerDirection = Position.DirectionTo(player.Position);
+							GD.Print($"direction to player X: {Math.Round(playerDirection.X)} Y: {Math.Round(playerDirection.Y)}");
+							if(Math.Round(playerDirection.X) == 0) {
+								if(Math.Round(playerDirection.Y) > 0){
+									velocity.Y = -Speed;
+								} else {
+									velocity.Y = Speed;
+								}
+							} else {
+								if(Math.Round(playerDirection.X) > 0){
+									velocity.X = -Speed;
+								} else {
+									velocity.X = Speed;
+								}
+							}
+							Velocity = velocity;
+							MoveAndSlide();
+							Timer knockedBackCooldown = GetNode<Timer>("KnockedBackCooldown");
+							knockedBackCooldown.Start();
+						}
+						else if(distance > 250)
+						{
+							animatedSprite2D.Play("walk");
+							Position += (player.Position - Position) / SpeedModifier;
+							MoveAndSlide();
+						} else {
+							//try to attack the player
+						}
 						break;
 					}
 				case PlayerState.KnockedBack:
@@ -48,6 +79,11 @@ namespace RPGTutorial
 					{
 						BecomeDefeated();
 						MainState = PlayerState.None;
+						break;
+					}
+				default:
+					{
+						//the slime should do some roaming around
 						break;
 					}
 			}
