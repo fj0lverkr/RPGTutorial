@@ -26,6 +26,7 @@ namespace RPGTutorial
 
 		public override void _PhysicsProcess(double delta)
 		{
+			base._PhysicsProcess(delta);
 			if (CurrentState != PlayerState.Attacking) PlayerMovement(delta);
 		}
 
