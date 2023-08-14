@@ -20,20 +20,44 @@ namespace RPGTutorial
 
 		private readonly Vector2 playerSpawnLeft = new(5, 50);
 		private readonly Vector2 playerSpawnRight = new(416, 104);
-		private readonly List<GameCharacter> EnemiesOnWorldScene = new();
+		private readonly List<GameCharacter> EnemiesOnScene = new();
 
 		public override void _Ready()
 		{
 			Slime slime = SlimeScene.Instantiate<Slime>();
 			Player player = PlayerScene.Instantiate<Player>();
+			List<GameCharacterData> characterData = GlobalNode.LoadCharacterStates("world");
+			if (characterData.Count == 0)
+			{
 				slime.CharacterType = GameCharacterType.Slime;
 				slime.Position = new Vector2(100, 175);
 				slime.Name = "Jefke";
 				slime.Speed = 35;
-				slime.CharacterDefeated += () => EnemiesOnWorldScene.Remove(slime);
-				EnemiesOnWorldScene.Add(slime);
+				slime.CharacterDefeated += () => EnemiesOnScene.Remove(slime);
+				EnemiesOnScene.Add(slime);
 				AddChild(slime);
-			player.Name = GlobalNode.PLayerName;
+			}
+			else
+			{
+				foreach (GameCharacterData data in characterData)
+				{
+					switch (data.CharacterType)
+					{
+						case GameCharacterType.Slime:
+							slime.Position = data.Position;
+							slime.Name = data.CharacterName;
+							slime.Speed = data.Speed;
+							slime.HitPoints = data.HitPoints;
+							slime.MaxHitPoints = data.MaxHitPoints;
+							slime.CharacterDefeated += () => EnemiesOnScene.Remove(slime);
+							EnemiesOnScene.Add(slime);
+							AddChild(slime);
+							break;
+					}
+				}
+			}
+
+			player.Name = GlobalNode.PlayerName;
 			player.HitPoints = GlobalNode.PlayerHP;
 			if (GlobalNode.PreviousScene == "world" || GlobalNode.PreviousScene == "leftScene")
 			{
@@ -53,9 +77,9 @@ namespace RPGTutorial
 		{
 			if (body.IsInGroup("MC"))
 			{
+				GlobalNode.SaveCharacterState("world", EnemiesOnScene);
 				GlobalNode.PreviousScene = GlobalNode.CurrentScene;
 				GlobalNode.CurrentScene = "leftScene";
-				GD.Print(EnemiesOnWorldScene.Count);
 				GetTree().ChangeSceneToFile("res://scenes/left_scene.tscn");
 			}
 		}

@@ -46,11 +46,11 @@ namespace RPGTutorial.Objects
 			animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 			HealthBar = GetNode<ProgressBar>("HealthBar");
 			HealthBar.MaxValue = MaxHitPoints;
+			HitPoints = HitPoints == 0.0f ? MaxHitPoints : HitPoints;
 
 			if (IsInGroup("Enemies"))
 			{
 				HitEffect = GetNode<GpuParticles2D>("HitEffectParticles2D");
-				HitPoints = MaxHitPoints;
 				animatedSprite2D.Play("idle");
 			}
 		}

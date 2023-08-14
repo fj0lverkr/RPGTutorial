@@ -19,7 +19,7 @@ namespace RPGTutorial
 		public override void _Ready()
 		{
 			Player player = PlayerScene.Instantiate<Player>();
-			player.Name = GlobalNode.PLayerName;
+			player.Name = GlobalNode.PlayerName;
 			player.HitPoints = GlobalNode.PlayerHP;
 			player.Position = playerSpawn;
 			player.CurrentDirection = PlayerDirection.Left;
