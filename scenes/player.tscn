@@ -441,6 +441,10 @@ shape = SubResource("CircleShape2D_p83lw")
 
 [node name="EnemyAttackCooldown" type="Timer" parent="."]
 
+[node name="KnockedBackCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="WorldCamera" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 limit_left = 0

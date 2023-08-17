@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace RPGTutorial
 {
-
-
 	using Model;
 	using Objects;
 
@@ -198,6 +196,19 @@ namespace RPGTutorial
 				CurrentState = PlayerState.Idle;
 				IsOnAttackCoolDown = false;
 			}
+		}
+
+		public override void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
+		{
+			base.TakeDamage(damage, modifier, attackSource);
+			Timer knockedBackCooldown = GetNode<Timer>("KnockedBackCooldown");
+			knockedBackCooldown.Start();
+		}
+
+		private void OnKnockedBackCooldownDone()
+		{
+			Vector2 velocity = new(0, 0);
+			Velocity = velocity;
 		}
 	}
 }

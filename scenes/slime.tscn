@@ -117,7 +117,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -235,8 +235,7 @@ KnockBackVelocity = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y2hl5")
-animation = &"walk"
-frame_progress = 0.166208
+animation = &"jump"
 offset = Vector2(0, -6)
 metadata/_edit_lock_ = true
 
@@ -266,6 +265,7 @@ metadata/_edit_lock_ = true
 
 [node name="KnockedBackCooldown" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
 
 [node name="HitEffectParticles2D" type="GPUParticles2D" parent="."]
 z_index = 2
@@ -286,6 +286,11 @@ offset_bottom = 33.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
+[node name="EnemyAttackCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="body_entered" from="DetectionArea" to="." method="DetectionAreaBodyEntered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="DetectionAreaBodyExited"]
 [connection signal="timeout" from="KnockedBackCooldown" to="." method="OnKnockedBackCooldownDone"]
+[connection signal="timeout" from="EnemyAttackCooldown" to="." method="OnAttackCooldownEnd"]

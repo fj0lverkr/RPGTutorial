@@ -64,7 +64,7 @@ namespace RPGTutorial.Objects
 		public virtual void TakeDamage(int damage, float modifier, PlayerDirection attackSource)
 		{
 			modifier = modifier < 0.05 || modifier == 0 ? 0.05f : modifier; // prevent over-damage and division by zero
-			modifier = modifier > 5 ? 5 : modifier; //prevent under-damage
+			modifier = modifier > 2 ? 2 : modifier; //prevent under-damage
 			HitPoints -= damage / modifier;
 			GD.Print($"{Name} is hit for {damage}/{modifier} = {damage / modifier} damage, new HP: {HitPoints}/{MaxHitPoints}.");
 			MainState = PlayerState.KnockedBack;

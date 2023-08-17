@@ -49,6 +49,7 @@ namespace RPGTutorial
 							slime.Speed = data.Speed;
 							slime.HitPoints = data.HitPoints;
 							slime.MaxHitPoints = data.MaxHitPoints;
+							slime.AttackDiff = 50;
 							slime.CharacterDefeated += () => EnemiesOnScene.Remove(slime);
 							EnemiesOnScene.Add(slime);
 							AddChild(slime);

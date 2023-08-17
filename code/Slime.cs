@@ -3,12 +3,20 @@ using Godot;
 
 namespace RPGTutorial
 {
+	using System.Linq;
 	using Model;
 	using Objects;
 
 	public partial class Slime : GameCharacter
 	{
 		private Node2D player;
+		private Timer cooldown;
+
+		public override void _Ready()
+		{
+			base._Ready();
+			cooldown = GetNode<Timer>("EnemyAttackCooldown");
+		}
 
 		public override void _PhysicsProcess(double delta)
 		{
@@ -19,22 +27,36 @@ namespace RPGTutorial
 					{
 						animatedSprite2D.FlipH = player.Position.X - Position.X < 0;
 						float distance = Position.DistanceSquaredTo(player.Position);
-						if (distance <= 200)
+						if (distance > 250)
+						{
+							animatedSprite2D.Play("walk");
+							Position += (player.Position - Position) / SpeedModifier;
+							MoveAndSlide();
+						}
+						else if (distance < 200)
 						{
 							animatedSprite2D.Play("walk");
 							Vector2 velocity = Velocity;
 							Vector2 playerDirection = Position.DirectionTo(player.Position);
-							GD.Print($"direction to player X: {Math.Round(playerDirection.X)} Y: {Math.Round(playerDirection.Y)}");
-							if(Math.Round(playerDirection.X) == 0) {
-								if(Math.Round(playerDirection.Y) > 0){
+							if (Math.Round(playerDirection.X) == 0)
+							{
+								if (Math.Round(playerDirection.Y) > 0)
+								{
 									velocity.Y = -Speed;
-								} else {
+								}
+								else
+								{
 									velocity.Y = Speed;
 								}
-							} else {
-								if(Math.Round(playerDirection.X) > 0){
+							}
+							else
+							{
+								if (Math.Round(playerDirection.X) > 0)
+								{
 									velocity.X = -Speed;
-								} else {
+								}
+								else
+								{
 									velocity.X = Speed;
 								}
 							}
@@ -43,13 +65,9 @@ namespace RPGTutorial
 							Timer knockedBackCooldown = GetNode<Timer>("KnockedBackCooldown");
 							knockedBackCooldown.Start();
 						}
-						else if(distance > 250)
+						else
 						{
-							animatedSprite2D.Play("walk");
-							Position += (player.Position - Position) / SpeedModifier;
-							MoveAndSlide();
-						} else {
-							//try to attack the player
+							TryAttackPlayer();
 						}
 						break;
 					}
@@ -94,6 +112,7 @@ namespace RPGTutorial
 			if (MainState != PlayerState.None && MainState != PlayerState.Defeated && MainState != PlayerState.KnockedBack)
 			{
 				player = body;
+				EnemiesInMeleeRange.Add(body);
 				MainState = PlayerState.Chasing;
 			}
 		}
@@ -135,6 +154,63 @@ namespace RPGTutorial
 			{
 				MainState = PlayerState.Defeated;
 			}
+		}
+
+		private void TryAttackPlayer()
+		{
+			if (!IsOnAttackCoolDown)
+			{
+				IsOnAttackCoolDown = true;
+				Vector2 velocity = Velocity;
+				velocity.X = 0;
+				velocity.Y = 0;
+
+				foreach (Player attackPlayer in EnemiesInMeleeRange.Cast<Player>())
+				{
+					float diffY = Math.Abs(attackPlayer.Position.Y - Position.Y);
+					if (player.Position.X - Position.X < 0)
+					{
+						animatedSprite2D.FlipH = true;
+						if (attackPlayer.Position.X <= Position.X && diffY <= AttackDiff)
+						{
+							attackPlayer.TakeDamage(AttackPoints, diffY, CurrentDirection);
+						}
+					}
+					else
+					{
+						animatedSprite2D.FlipH = false;
+						if (attackPlayer.Position.X >= Position.X && diffY <= AttackDiff)
+						{
+							attackPlayer.TakeDamage(AttackPoints, diffY, CurrentDirection);
+						}
+					}
+					animatedSprite2D.Play("attack");
+				}
+				Velocity = velocity;
+			}
+			else
+			{
+				if (cooldown.IsStopped())
+				{
+					Random random = new();
+					double waitTime = 0;
+					while (waitTime < 0.5)
+					{
+						waitTime = random.NextDouble() * 3;
+					}
+					cooldown.WaitTime = waitTime;
+					cooldown.Start();
+					 animatedSprite2D.Play("walk");
+
+					GD.Print($"{Name}: Attack cooldowns started.");
+				}
+			}
+		}
+
+		public void OnAttackCooldownEnd()
+		{
+			IsOnAttackCoolDown = false;
+			GD.Print($"{Name}: Attack cooldowns ended.");
 		}
 	}
 }
